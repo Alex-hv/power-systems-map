@@ -1,0 +1,43 @@
+.map{
+	margin:50px 17% 0;
+	width:66%;
+	position: absolute;
+
+}
+
+#Map {
+	border: none;
+	height: auto;
+	max-width: 100%;
+	width: auto;
+} 
+
+.popover{
+	z-index:1!important;
+	display:none;
+	max-width:400px!important;
+}
+
+#popover1{
+	left:260px;
+	top:40px;
+}
+
+#popover2{
+	left:330px;
+	top:90px;
+}
+
+#popover3{
+	left:520px;
+	top:40px;
+}
+
+.popover-content-right{
+	display:inline-block;
+	float:right;
+}
+.popover-content-left{
+	display:inline-block;
+	margin-right:10px;
+}
