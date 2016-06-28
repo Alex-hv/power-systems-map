@@ -18,21 +18,6 @@
 	max-width:400px!important;
 }
 
-#popover1{
-	left:260px;
-	top:40px;
-}
-
-#popover2{
-	left:330px;
-	top:90px;
-}
-
-#popover3{
-	left:520px;
-	top:40px;
-}
-
 .popover-content-right{
 	display:inline-block;
 	float:right;
