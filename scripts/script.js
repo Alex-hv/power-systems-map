@@ -336,20 +336,24 @@ function light(num,col){
 
 //задаю положение попапа исходя из положения мышки
 function openPopover() { 
-	$('#popover').removeClass('top bottom left right');
+	$('#popover').removeClass('top bottom left right top-left bottom-left top-right bottom-right');
 	//50 - расояние от верха экрана в пикселях(в стилях задается)
 	//
 	if(top<(50+$('#popover').height()) && left<(($(window).width()-$('.map').width())/2+$('.popover').width()/2)) {//верхний левый
-		$('#popover').css({'top':top+ 'px', 'left':left + 'px'});
+		$('#popover').addClass('top-left');
+		$('#popover').css({'top':top -15 + 'px', 'left':left +11+ 'px'});
 	}
 	else if(top<(50+$('#popover').height()) && left>(($(window).width()-$('.map').width())/2+$('.map').width()-$('.popover').width()/2)){//верхний правый
-		$('#popover').css({'top':top+ 'px', 'left':left -$('.popover').width() + 'px'});
+		$('#popover').addClass('top-right');
+		$('#popover').css({'top':top-11 + 'px', 'left':left -11 -$('.popover').width() + 'px'});
 	}
 	else if(top>($('.map').height()-$('.popover').height()) && left<(($(window).width()-$('.map').width())/2+$('.popover').width()/2)){//нижний левый
-		$('#popover').css({'top':top - $('.popover').height() + 'px', 'left':left + 'px'});
+		$('#popover').addClass('bottom-left');
+		$('#popover').css({'top':top - $('.popover').height() +11 + 'px', 'left':left +11 + 'px'});
 	}
 	else if(top>($('.map').height()-$('.popover').height()) && left>(($(window).width()-$('.map').width())/2+$('.map').width()-$('.popover').width()/2)){//нижний правый
-		$('#popover').css({'top':top - $('.popover').height() +'px', 'left':left - $('.popover').width() + 'px'});
+		$('#popover').addClass('bottom-right');
+		$('#popover').css({'top':top +11 - $('.popover').height() +'px', 'left':left -11 - $('.popover').width() + 'px'});
 	}
 	else if(top<(50+$('#popover').height())) { //нижний
 		$('#popover').addClass('bottom');
