@@ -22,6 +22,8 @@ var w = 1600;
 var h = 799;
 var number;
 var color;
+var top;
+var left;
 //подганяю карту к размерам экрана при изменении размера экрана
 $(window).resize(function(){
 	NewSize();
@@ -318,12 +320,9 @@ function NewSize(){
 
 //ф-я подсветки области + появления попапа 
 function light(num,col){
-	var top;
-	var left;
 	$(document).mousemove(function(e){ //получаю положение мышки
     	left = e.pageX; 
     	top = e.pageY; 
-    	
 	});
 	timeoutId = setTimeout(openPopover, 400) //делаю задержку, чтоб пользователь мог выбрать энергосистему и остановится на ней
 	//ниже я освещаю область
@@ -333,11 +332,45 @@ function light(num,col){
 	$('#area' + num ).data('maphilight',x).trigger('alwaysOn.maphilight');
 	number=num;
 	color=col;
-	//задаю положение попапа исходя из положения мышки
-	function openPopover() { 
-		$('#popover').css({'display':'block','top':top - ($('.popover').height()+10) + 'px', 'left':left - ($('.popover').width()/2) + 'px'});
-	}
 };
+
+//задаю положение попапа исходя из положения мышки
+function openPopover() { 
+	$('#popover').removeClass('top bottom left right');
+	//50 - расояние от верха экрана в пикселях(в стилях задается)
+	//
+	if(top<(50+$('#popover').height()) && left<(($(window).width()-$('.map').width())/2+$('.popover').width()/2)) {//верхний левый
+		$('#popover').css({'top':top+ 'px', 'left':left + 'px'});
+	}
+	else if(top<(50+$('#popover').height()) && left>(($(window).width()-$('.map').width())/2+$('.map').width()-$('.popover').width()/2)){//верхний правый
+		$('#popover').css({'top':top+ 'px', 'left':left -$('.popover').width() + 'px'});
+	}
+	else if(top>($('.map').height()-$('.popover').height()) && left<(($(window).width()-$('.map').width())/2+$('.popover').width()/2)){//нижний левый
+		$('#popover').css({'top':top - $('.popover').height() + 'px', 'left':left + 'px'});
+	}
+	else if(top>($('.map').height()-$('.popover').height()) && left>(($(window).width()-$('.map').width())/2+$('.map').width()-$('.popover').width()/2)){//нижний правый
+		$('#popover').css({'top':top - $('.popover').height() +'px', 'left':left - $('.popover').width() + 'px'});
+	}
+	else if(top<(50+$('#popover').height())) { //нижний
+		$('#popover').addClass('bottom');
+		$('#popover').css({'top':top +20 + 'px', 'left':left - ($('.popover').width()/2) + 'px'});
+	}
+	else if(left<(($(window).width()-$('.map').width())/2+$('.popover').width()/2)) { //правый
+		$('#popover').addClass('right');
+		$('#popover').css({'top':top  - ($('.popover').height()/2) + 'px', 'left':left + 'px'});
+	}
+	else if(left>(($(window).width()-$('.map').width())/2+$('.map').width()-$('.popover').width()/2)) {//левый
+		$('#popover').addClass('left');
+		$('#popover').css({'top':top - ($('.popover').height()/2) + 'px', 'left':left - ($('.popover').width()) + 'px'});
+	}
+
+	else{//верхний
+		$('#popover').addClass('top');
+		$('#popover').css({'top':top - ($('.popover').height()+5) + 'px', 'left':left - ($('.popover').width()/2) + 'px'});
+	}
+
+	$('#popover').show(120);
+}
 
 //при наведении мышкой на попап область не тухнет
 
