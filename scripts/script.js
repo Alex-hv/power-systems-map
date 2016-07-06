@@ -22,15 +22,25 @@ var w = 1600;
 var h = 799;
 var number;
 var color;
+//отступы, используются для положения попапов
 var top;
 var left;
-var i=0;
+//для тач экранов, индикатор, открыл ли попап
+var isPopupOpened=false;
+var timeoutId;
+//для положения букв
+var topLetters=[];
+var leftLetters=[];
+for (var i = 1; i < 16; i++) {
+	topLetters[i]=$("#letter"+i).css('top');
+	leftLetters[i]=$("#letter"+i).css('left');
+}
 
 //подганяю карту к размерам экрана при изменении размера экрана
 $(window).resize(function(){
 	NewSize();
 });
-
+ 
 //ф-я для подгонки карты к размерам экрана
 function NewSize(){
 	//проверка на тач
@@ -325,29 +335,34 @@ function NewSize(){
 		$('#area15').hover(function(){light(15,"rose")},function(){dark()});
 	}
 	else{//для тач экранов
-		$('#area1').click(function(){light_touch(1,"green")});
-		$('#area2').click(function(){light_touch(2,"blue")});
-		$('#area3').click(function(){light_touch(3,"green")});
-		$('#area4').click(function(){light_touch(4,"blue")});
-		$('#area5').click(function(){light_touch(5,"blue")});
-		$('#area6').click(function(){light_touch(6,"green")});
-		$('#area7').click(function(){light_touch(7,"green")});
-		$('#area8').click(function(){light_touch(8,"blue")});
-		$('#area9').click(function(){light_touch(9,"rose")});
-		$('#area10').click(function(){light_touch(10,"rose")});
-		$('#area11').click(function(){light_touch(11,"rose")});
-		$('#area12').click(function(){light_touch(12,"rose")});
-		$('#area13').click(function(){light_touch(13,"rose")});
-		$('#area14').click(function(){light_touch(14,"rose")});
-		$('#area15').click(function(){light_touch(15,"rose")});
+		$('#area1').click(function(){lightTouch(1,"green")});
+		$('#area2').click(function(){lightTouch(2,"blue")});
+		$('#area3').click(function(){lightTouch(3,"green")});
+		$('#area4').click(function(){lightTouch(4,"blue")});
+		$('#area5').click(function(){lightTouch(5,"blue")});
+		$('#area6').click(function(){lightTouch(6,"green")});
+		$('#area7').click(function(){lightTouch(7,"green")});
+		$('#area8').click(function(){lightTouch(8,"blue")});
+		$('#area9').click(function(){lightTouch(9,"rose")});
+		$('#area10').click(function(){lightTouch(10,"rose")});
+		$('#area11').click(function(){lightTouch(11,"rose")});
+		$('#area12').click(function(){lightTouch(12,"rose")});
+		$('#area13').click(function(){lightTouch(13,"rose")});
+		$('#area14').click(function(){lightTouch(14,"rose")});
+		$('#area15').click(function(){lightTouch(15,"rose")});
 	}
 	
-	//тест
-	$(".letter").css({
-		top:100/w*wPercent,
-		left:900/w*wPercent,
-		"font-size": "15pt"
-	})
+	//Отображение букв на нужных местах
+	for (var i = 1; i < 16; i++) {
+		topLetters[i].replace('px', "");
+		leftLetters[i].replace('px', "");
+		var top=parseInt(topLetters[i]);
+		var left=parseInt(leftLetters[i]);
+		$("#letter"+i).css({
+			top:top/w*100*wPercent/100,
+			left:left/w*100*wPercent/100
+		})
+	}
 };
 
 //ф-я подсветки области + появления попапа 
@@ -367,8 +382,8 @@ function light(num,col){
 };
 
 //ф-я подсветки области + появления попапа для тач экранов
-function light_touch(num,col){
-	if(i==0){
+function lightTouch(num,col){
+	if(!isPopupOpened){
 		$(document).click(function(e){ //получаю положение клика
    			left = e.pageX; 
    			top = e.pageY; 
@@ -381,11 +396,11 @@ function light_touch(num,col){
 		$('#area' + num ).data('maphilight',x).trigger('alwaysOn.maphilight');
 		number=num;
 		color=col;
-		i=1;
+		isPopupOpened=true;
 	}
 	else{
 		dark();
-		i=0;
+		isPopupOpened=false;
 	}
 };
 

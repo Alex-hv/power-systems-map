@@ -3,9 +3,103 @@
 	width:66%;
 	position: absolute;
 }
-.letter{
+#letter1{
+	top:140px;
+	left:260px;
 	position: absolute;
 	z-index: -1;
+}
+#letter2{
+	top:250px;
+	left:340px;
+	position: absolute;
+	z-index: -1;
+}
+#letter3{
+	top:180px;
+	left:490px;
+	position: absolute;
+	z-index: -1;
+}
+#letter4{
+	top:300px;
+	left:820px;
+	position: absolute;
+	z-index: -1;
+}
+#letter5{
+	top:510px;
+	left:640px;
+	position: absolute;
+	z-index: -1;
+}
+#letter6{
+	top:395px;
+	left:545px;
+	position: absolute;
+	z-index: -1;
+}
+#letter7{
+	top:210px;
+	left:690px;
+	position: absolute;
+	z-index: -1;
+}
+#letter8{
+	top:330px;
+	left:640px;
+	position: absolute;
+	z-index: -1;
+}
+#letter9{
+	top:385px;
+	left:400px;
+	position: absolute;
+	z-index: -1;
+}
+#letter10{
+	top:450px;
+	left:210px;
+	position: absolute;
+	z-index: -1;
+}
+#letter11{
+	top:380px;
+	left:50px;
+	position: absolute;
+	z-index: -1;
+}
+#letter12{
+	top:280px;
+	left:50px;
+	position: absolute;
+	z-index: -1;
+}
+#letter13{
+	top:120px;
+	left:95px;
+	position: absolute;
+	z-index: -1;
+}
+#letter14{
+	top:40px;
+	left:380px;
+	position: absolute;
+	z-index: -1;
+}
+#letter15{
+	top:100px;
+	left:900px;
+	position: absolute;
+	z-index: -1;
+}
+.letter{
+	font-size: 12pt;
+}
+@media(min-width: 1025px){
+	.letter{
+		font-size: 15pt;
+	}
 }
 #Map {
 	border: none;
