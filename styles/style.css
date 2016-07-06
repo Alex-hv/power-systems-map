@@ -112,15 +112,10 @@
 	display:none;
 	max-width:400px!important;
 }
-.popover-content-right{
-	display:inline-block;
-	float:right;
+.popover-content{
+	overflow: auto;
+	max-height: 140px!important;
 }
-.popover-content-left{
-	display:inline-block;
-	margin-right:10px;
-}
-
 .popover.top-left > .arrow {
   top: 10%;
   left: -11px;
