@@ -24,12 +24,20 @@ var number;
 var color;
 var top;
 var left;
+var i=0;
+
 //подганяю карту к размерам экрана при изменении размера экрана
 $(window).resize(function(){
 	NewSize();
 });
+
 //ф-я для подгонки карты к размерам экрана
 function NewSize(){
+	//проверка на тач
+	function is_touch_device() {
+ 	 return 'ontouchstart' in window 
+  	    || 'onmsgesturechange' in window;
+	};	
 	//получаю размеры экрана
 	var wPercent = $(window).width();
 	var hPercent = $(window).height();
@@ -298,31 +306,55 @@ function NewSize(){
 	area15.strokeWidth = 3;
 	$('#area15').data('maphilight',area15).trigger('alwaysOn.maphilight');
 
-	//При наведении на область она подсвечивается другим цветом
-	$('#area1').hover(function(){light(1,"green")},function(){dark(1,"green")});
-	$('#area2').hover(function(){light(2,"blue")},function(){dark(2,"blue")});
-	$('#area3').hover(function(){light(3,"green")},function(){dark(3,"green")});
-	$('#area4').hover(function(){light(4,"blue")},function(){dark(4,"blue")});
-	$('#area5').hover(function(){light(5,"blue")},function(){dark(5,"blue")});
-	$('#area6').hover(function(){light(6,"green")},function(){dark(6,"green")});
-	$('#area7').hover(function(){light(7,"green")},function(){dark(7,"green")});
-	$('#area8').hover(function(){light(8,"blue")},function(){dark(8,"blue")});
-	$('#area9').hover(function(){light(9,"rose")},function(){dark(9,"rose")});
-	$('#area10').hover(function(){light(10,"rose")},function(){dark(10,"rose")});
-	$('#area11').hover(function(){light(11,"rose")},function(){dark(11,"rose")});
-	$('#area12').hover(function(){light(12,"rose")},function(){dark(12,"rose")});
-	$('#area13').hover(function(){light(13,"rose")},function(){dark(13,"rose")});
-	$('#area14').hover(function(){light(14,"rose")},function(){dark(14,"rose")});
-	$('#area15').hover(function(){light(15,"rose")},function(){dark(15,"rose")});
-
+	if (is_touch_device()==false){//для не-тач экранов
+		//При наведении на область она подсвечивается другим цветом
+		$('#area1').hover(function(){light(1,"green")},function(){dark()});
+		$('#area2').hover(function(){light(2,"blue")},function(){dark()});
+		$('#area3').hover(function(){light(3,"green")},function(){dark()});
+		$('#area4').hover(function(){light(4,"blue")},function(){dark()});
+		$('#area5').hover(function(){light(5,"blue")},function(){dark()});
+		$('#area6').hover(function(){light(6,"green")},function(){dark()});
+		$('#area7').hover(function(){light(7,"green")},function(){dark()});
+		$('#area8').hover(function(){light(8,"blue")},function(){dark()});
+		$('#area9').hover(function(){light(9,"rose")},function(){dark()});
+		$('#area10').hover(function(){light(10,"rose")},function(){dark()});
+		$('#area11').hover(function(){light(11,"rose")},function(){dark()});
+		$('#area12').hover(function(){light(12,"rose")},function(){dark()});
+		$('#area13').hover(function(){light(13,"rose")},function(){dark()});
+		$('#area14').hover(function(){light(14,"rose")},function(){dark()});
+		$('#area15').hover(function(){light(15,"rose")},function(){dark()});
+	}
+	else{//для тач экранов
+		$('#area1').click(function(){light_touch(1,"green")});
+		$('#area2').click(function(){light_touch(2,"blue")});
+		$('#area3').click(function(){light_touch(3,"green")});
+		$('#area4').click(function(){light_touch(4,"blue")});
+		$('#area5').click(function(){light_touch(5,"blue")});
+		$('#area6').click(function(){light_touch(6,"green")});
+		$('#area7').click(function(){light_touch(7,"green")});
+		$('#area8').click(function(){light_touch(8,"blue")});
+		$('#area9').click(function(){light_touch(9,"rose")});
+		$('#area10').click(function(){light_touch(10,"rose")});
+		$('#area11').click(function(){light_touch(11,"rose")});
+		$('#area12').click(function(){light_touch(12,"rose")});
+		$('#area13').click(function(){light_touch(13,"rose")});
+		$('#area14').click(function(){light_touch(14,"rose")});
+		$('#area15').click(function(){light_touch(15,"rose")});
+	}
 	
-}
+	//тест
+	$(".letter").css({
+		top:100/w*wPercent,
+		left:900/w*wPercent,
+		"font-size": "15pt"
+	})
+};
 
 //ф-я подсветки области + появления попапа 
 function light(num,col){
 	$(document).mousemove(function(e){ //получаю положение мышки
-    	left = e.pageX; 
-    	top = e.pageY; 
+   		left = e.pageX; 
+   		top = e.pageY; 
 	});
 	timeoutId = setTimeout(openPopover, 400) //делаю задержку, чтоб пользователь мог выбрать энергосистему и остановится на ней
 	//ниже я освещаю область
@@ -334,11 +366,34 @@ function light(num,col){
 	color=col;
 };
 
-//задаю положение попапа исходя из положения мышки
+//ф-я подсветки области + появления попапа для тач экранов
+function light_touch(num,col){
+	if(i==0){
+		$(document).click(function(e){ //получаю положение клика
+   			left = e.pageX; 
+   			top = e.pageY; 
+		});
+		timeoutId = setTimeout(openPopover, 1) 
+		//ниже я освещаю область
+		var x = $('#area' + num ).data('maphilight') || {};
+		x.fillColor = 'ffca00';
+		x.strokeColor = 'ffffff';
+		$('#area' + num ).data('maphilight',x).trigger('alwaysOn.maphilight');
+		number=num;
+		color=col;
+		i=1;
+	}
+	else{
+		dark();
+		i=0;
+	}
+};
+
+//задаю положение попапа исходя из положения мышки(клика)
 function openPopover() { 
 	$('#popover').removeClass('top bottom left right top-left bottom-left top-right bottom-right');
 	//50 - расояние от верха экрана в пикселях(в стилях задается)
-	//
+	//11 - размеры треугольника-стрелочки, для угловых попапов
 	if(top<(50+$('#popover').height()) && left<(($(window).width()-$('.map').width())/2+$('.popover').width()/2)) {//верхний левый
 		$('#popover').addClass('top-left');
 		$('#popover').css({'top':top -15 + 'px', 'left':left +11+ 'px'});
@@ -367,17 +422,15 @@ function openPopover() {
 		$('#popover').addClass('left');
 		$('#popover').css({'top':top - ($('.popover').height()/2) + 'px', 'left':left - ($('.popover').width()) + 'px'});
 	}
-
 	else{//верхний
 		$('#popover').addClass('top');
 		$('#popover').css({'top':top - ($('.popover').height()+5) + 'px', 'left':left - ($('.popover').width()/2) + 'px'});
 	}
 
 	$('#popover').show(120);
-}
+};
 
 //при наведении мышкой на попап область не тухнет
-
 $('#popover').hover(function(){
 	$('#popover').css({'display':'block'});
 	var a = $('#area' + number ).data('maphilight') || {};
@@ -386,14 +439,13 @@ $('#popover').hover(function(){
 	$('#area' + number ).data('maphilight',a).trigger('alwaysOn.maphilight');
 },function(){
 	$('#popover').css({'display':'none'});
-	dark(number,color);
-	
+	dark();
 });
 
 
 //ф-я затемнения области 
-function dark(num,color){
-	var x = $('#area' + num ).data('maphilight') || {};
+function dark(){
+	var x = $('#area' + number ).data('maphilight') || {};
 	switch (color){
 		case "green":
 		x.fillColor = '00FF00';
@@ -406,11 +458,10 @@ function dark(num,color){
 		break;
 	}
 	x.strokeColor = 'ffffff';
-	$('#area' + num ).data('maphilight',x).trigger('alwaysOn.maphilight');
+	$('#area' + number ).data('maphilight',x).trigger('alwaysOn.maphilight');
 	$('#popover').css({'display':'none'});
 	//отменяю функцию запуска открытия попапа, если пользователь ушел с этой области
 	clearTimeout(timeoutId);
-
 };
 
 NewSize();

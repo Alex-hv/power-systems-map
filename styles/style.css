@@ -3,6 +3,10 @@
 	width:66%;
 	position: absolute;
 }
+.letter{
+	position: absolute;
+	z-index: -1;
+}
 #Map {
 	border: none;
 	height: auto;
